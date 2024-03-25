@@ -20,25 +20,25 @@ namespace KAMTestStand
         }
         public void AddDataEntity(Entity entity)
         {
-            var modifyEntity = FindEntity(entity.SerialNumber);
+            var modifyEntity = FindEntity(entity.SerialNumberVal);
             if (modifyEntity is null)
             {
                 var newEntity = new Entity()
                 {
-                    SerialNumber = entity.SerialNumber,
+                    SerialNumberVal = entity.SerialNumberVal,
                 };
                 AddEntity(newEntity);
                 modifyEntity = newEntity;
             }
             
-            if (entity.ModelId != 0) modifyEntity.ModelId = entity.ModelId;
-            if (entity.TimeReady != 0) modifyEntity.TimeReady = entity.TimeReady;
-            if (entity.SerialNumber != 0) modifyEntity.SerialNumber = entity.SerialNumber;
+            if (entity.DeviceIdVal != 0) modifyEntity.DeviceIdVal = entity.DeviceIdVal;
+            if (entity.ReadyTimeVal != 0) modifyEntity.ReadyTimeVal = entity.ReadyTimeVal;
+            if (entity.SerialNumberVal != 0) modifyEntity.SerialNumberVal = entity.SerialNumberVal;
             
         }
         private Entity? FindEntity(int serialNumber)
         {
-            var firstOrDefault = Data.FirstOrDefault(n => n.SerialNumber == serialNumber);
+            var firstOrDefault = Data.FirstOrDefault(n => n.SerialNumberVal == serialNumber);
             return firstOrDefault;
         }
     }

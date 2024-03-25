@@ -37,14 +37,13 @@ namespace KAMTestStand
             _comData.Init();
             var _tcpData = new TcpData(_settings);
             var _report = new Report(_settings);
-            var _dataExchange = new DataExchange(_comData, _tcpData, _report);
+            var _dataExchange = new DataExchange(_comData, _tcpData, _report, entityList);
             _comData.ParseDataAppSet(_dataExchange.ParseData);
 
             InitializeComponent();
             DataGrid.ItemsSource = entityList.Data;
 
-            entityList.AddDataEntity(new Entity() { ModelId = 1, TimeReady = 12, SerialNumber = 787878 });
-            entityList.AddDataEntity(new Entity() { TimeReady = 33, SerialNumber = 565656 });
+            entityList.AddDataEntity(new Entity() { DeviceIdVal =  1, ReadyTimeVal = 10, SerialNumberVal = 787878});
 
         }
 

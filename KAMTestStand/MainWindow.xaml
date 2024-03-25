@@ -44,16 +44,16 @@
         <DataGrid Grid.Row="1" Name="DataGrid" IsReadOnly="True" AutoGenerateColumns="False" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Модель"
-                                    Binding="{Binding Path=ModelId}"
+                                    Binding="{Binding Path=DeviceIdVal}"
                                     Width="2*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сер.№" 
-                                    Binding="{Binding Path=SerialNumber}" 
+                                    Binding="{Binding Path= SerialNumberVal}" 
                                     Width="2*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Время вкл." 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=TimeReady}" 
+                                    Binding="{Binding Path=ReadyTimeVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-232 #1" 
