@@ -26,9 +26,10 @@ namespace KAMTestStand
         private readonly SettingsData _settings;
         readonly Setting _settingsWindow;
         private readonly ComData _comData;
+        private readonly EntityList _entityList;
         public MainWindow()
         {
-            var entityList = new EntityList();
+            _entityList = new EntityList();
             _settings = new SettingsData();
             ReadSettingsFile(_settings);
             _settingsWindow = new Setting(this, _settings);
@@ -39,14 +40,14 @@ namespace KAMTestStand
                 _comData.Init();
                 var _tcpData = new TcpData(_settings);
                 var _report = new Report(_settings);
-                var _dataExchange = new DataExchange(_comData, _tcpData, _report, entityList);
+                var _dataExchange = new DataExchange(_comData, _tcpData, _report, _entityList);
                 _comData.ParseDataAppSet(_dataExchange.ParseData);
             }
             
             InitializeComponent();
-            DataGrid.ItemsSource = entityList.Data;
+            DataGrid.ItemsSource = _entityList.Data;
 
-            entityList.AddDataEntity(new Entity() { DeviceIdVal =  1, ReadyTimeVal = 10, SerialNumberVal = 787878});
+            _entityList.AddDataEntity(new Entity() { DeviceIdVal =  1, ReadyTimeVal = 10, SerialNumberVal = 787878});
 
         }
 
@@ -95,6 +96,11 @@ namespace KAMTestStand
             {
                 Show();
             }
+        }
+
+        private void ButtonClear_OnClick(object sender, RoutedEventArgs e)
+        {
+            _entityList.Data.Clear();
         }
     }
 }

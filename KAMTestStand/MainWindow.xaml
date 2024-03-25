@@ -197,7 +197,7 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0"  Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Name="ButtonExit1" Margin="1">Очистить</Button>
+                <Button Name="ButtonClear" Click="ButtonClear_OnClick" Margin="1">Очистить</Button>
                 <Button Name="ButtonSettings" Click="ButtonSettings_OnClick" Margin="1">Настройки</Button>
                 <Button Name="ButtonExit3" Margin="1">История событий</Button>
                 <Button Name="ButtonExit4" Margin="1">Генерировать отчет</Button>
