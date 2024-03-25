@@ -15,11 +15,20 @@ public partial class Setting : Window
         InitializeComponent();
         _parent = parent;
         _settings = settings;
+        
+        TextBoxComAxi.Text = _settings.PortAxiName;
+        TextBoxComDiscovery.Text = _settings.PortDiscoveryName;
+        TextBoxPath.Text = _settings.PathReport;
+        TextBoxIsleep.Text = _settings.MaxCurrentDeepSleep.ToString();
+        TextBoxIgsm.Text = _settings.MaxCurrentGsm.ToString();
+        TextBoxIpeack.Text = _settings.MaxCurrentPeak.ToString();
+        TextBoxIsleepGsm.Text = _settings.MaxCurrentGsmSleep.ToString();
+        TextBoxTimeOn.Text = _settings.MaxTimeReady.ToString();
+        TextBoxPortSim.Text = _settings.PortSim.ToString();
     }
 
     private readonly Window _parent;
-    private SettingsData _settings;
-    
+    private readonly SettingsData _settings;
     private void ButtonCancel_OnClick(object sender, RoutedEventArgs e)
     {
         var result = SettingsIsValid();
@@ -44,38 +53,6 @@ public partial class Setting : Window
         if (!result) return;
         _parent.Show();
         Hide();
-    }
-    
-    public void ReadSettingsFile()
-    {
-        if (File.Exists("settings.txt"))
-        {
-            string?[] settings = File.ReadAllLines("settings.txt");
-
-            _settings.PortAxiName = settings[0];
-            _settings.PortDiscoveryName =settings[1];
-            _settings.PathReport = settings[2];
-            int.TryParse(settings[3], out _settings.MaxCurrentDeepSleep);
-            int.TryParse(settings[4], out _settings.MaxCurrentGsm);
-            int.TryParse(settings[5], out _settings.MaxCurrentPeak);
-            int.TryParse(settings[6], out _settings.MaxCurrentGsmSleep);
-            int.TryParse(settings[7], out _settings.MaxTimeReady);
-            int.TryParse(settings[8], out _settings.PortSim);
-
-            TextBoxComAxi.Text = _settings.PortAxiName;
-            TextBoxComDiscovery.Text = _settings.PortDiscoveryName;
-            TextBoxPath.Text = _settings.PathReport;
-            TextBoxIsleep.Text = _settings.MaxCurrentDeepSleep.ToString();
-            TextBoxIgsm.Text = _settings.MaxCurrentGsm.ToString();
-            TextBoxIpeack.Text = _settings.MaxCurrentPeak.ToString();
-            TextBoxIsleepGsm.Text = _settings.MaxCurrentGsmSleep.ToString();
-            TextBoxTimeOn.Text = _settings.MaxTimeReady.ToString();
-            TextBoxPortSim.Text = _settings.PortSim.ToString();
-        }
-        else
-        {
-            Show();
-        }
     }
 
     private bool SaveSettingsFile()
