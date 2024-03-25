@@ -25,14 +25,15 @@ namespace KAMTestStand
     {
         private readonly SettingsData _settings;
         readonly Setting _settingsWindow;
+        private readonly ComData _comData;
         public MainWindow()
         {
             var entityList = new EntityList();
             _settings = new SettingsData();
-            ReadSettingsFile();
+            ReadSettingsFile(_settings);
             _settingsWindow = new Setting(this, _settings);
             
-            var _comData = new ComData(_settings);
+            _comData = new ComData(_settings);
             _comData.Init();
             var _tcpData = new TcpData(_settings);
             var _report = new Report(_settings);
@@ -60,6 +61,7 @@ namespace KAMTestStand
 
         private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
         {
+            _comData.Deinit();
             _settingsWindow.Close();
         }
 
@@ -71,21 +73,21 @@ namespace KAMTestStand
             }
         }
 
-        public void ReadSettingsFile()
+        public void ReadSettingsFile(SettingsData setting)
         {
             if (File.Exists("settings.txt"))
             {
                 string?[] settings = File.ReadAllLines("settings.txt");
 
-                _settings.PortAxiName = settings[0];
-                _settings.PortDiscoveryName = settings[1];
-                _settings.PathReport = settings[2];
-                int.TryParse(settings[3], out _settings.MaxCurrentDeepSleep);
-                int.TryParse(settings[4], out _settings.MaxCurrentGsm);
-                int.TryParse(settings[5], out _settings.MaxCurrentPeak);
-                int.TryParse(settings[6], out _settings.MaxCurrentGsmSleep);
-                int.TryParse(settings[7], out _settings.MaxTimeReady);
-                int.TryParse(settings[8], out _settings.PortSim);
+                setting.PortAxiName = settings[0];
+                setting.PortDiscoveryName = settings[1];
+                setting.PathReport = settings[2];
+                int.TryParse(settings[3], out setting.MaxCurrentDeepSleep);
+                int.TryParse(settings[4], out setting.MaxCurrentGsm);
+                int.TryParse(settings[5], out setting.MaxCurrentPeak);
+                int.TryParse(settings[6], out setting.MaxCurrentGsmSleep);
+                int.TryParse(settings[7], out setting.MaxTimeReady);
+                int.TryParse(settings[8], out setting.PortSim);
             }
             else
             {
