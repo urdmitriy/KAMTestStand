@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,14 +21,20 @@ namespace KAMTestStand
     /// </summary>
     public partial class MainWindow : Window
     {
+        private SettingsData settingsApp;
+        Setting settingsWindow;
         public MainWindow()
         {
             var entityList = new EntityList();
-            entityList.ModifyEntity(new Entity(){ModelId = 1, TimeReady = 12, SerialNumber = 787878});
-            entityList.ModifyEntity(new Entity(){TimeReady = 33, SerialNumber = 565656});
+            settingsApp = new SettingsData();
+            settingsWindow = new Setting(this, settingsApp);
+            settingsWindow.ReadSettingsFile();
 
             InitializeComponent();
             DataGrid.ItemsSource = entityList.Data;
+            
+            entityList.AddDataEntity(new Entity(){ModelId = 1, TimeReady = 12, SerialNumber = 787878});
+            entityList.AddDataEntity(new Entity(){TimeReady = 33, SerialNumber = 565656});
             
         }
 
@@ -38,9 +45,21 @@ namespace KAMTestStand
 
         private void ButtonSettings_OnClick(object sender, RoutedEventArgs e)
         {
-            var settingsWindow = new Setting(this);
             settingsWindow.Show();
             Hide();
+        }
+
+        private void MainWindow_OnClosing(object? sender, CancelEventArgs e)
+        {
+            settingsWindow.Close();
+        }
+
+        private void MainWindow_OnContentRendered(object? sender, EventArgs e)
+        {
+            if (!settingsWindow.SettingsIsValid())
+            {
+                Hide();
+            }
         }
     }
 }

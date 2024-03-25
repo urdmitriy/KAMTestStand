@@ -16,6 +16,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         materialDesign:ShadowAssist.CacheMode="{x:Null}"
+        Closing="MainWindow_OnClosing"
+        ContentRendered="MainWindow_OnContentRendered"
         >
     <Window.Resources>
         <Style x:Key="ColumnHeaderRotateStyle" TargetType="DataGridColumnHeader">
@@ -43,14 +45,12 @@
         <DataGrid Grid.Row="1" Name="DataGrid" IsReadOnly="True" AutoGenerateColumns="False" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Модель"
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ModelId}"
-                                    Width="*">
+                                    Width="2*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сер.№" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=SerialNumber}" 
-                                    Width="*">
+                                    Width="2*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Время вкл." 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 

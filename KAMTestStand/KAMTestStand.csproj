@@ -8,7 +8,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="GrapeCity.Documents.Excel" Version="6.2.2" />
       <PackageReference Include="MaterialDesignThemes" Version="4.10.0-ci317" />
+      <PackageReference Include="System.IO.Ports" Version="8.0.0" />
     </ItemGroup>
 
 </Project>
