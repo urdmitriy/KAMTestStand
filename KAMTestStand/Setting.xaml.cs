@@ -16,15 +16,19 @@ public partial class Setting : Window
         _parent = parent;
         _settings = settings;
         
-        TextBoxComAxi.Text = _settings.PortAxiName;
-        TextBoxComDiscovery.Text = _settings.PortDiscoveryName;
-        TextBoxPath.Text = _settings.PathReport;
-        TextBoxIsleep.Text = _settings.MaxCurrentDeepSleep.ToString();
-        TextBoxIgsm.Text = _settings.MaxCurrentGsm.ToString();
-        TextBoxIpeack.Text = _settings.MaxCurrentPeak.ToString();
-        TextBoxIsleepGsm.Text = _settings.MaxCurrentGsmSleep.ToString();
-        TextBoxTimeOn.Text = _settings.MaxTimeReady.ToString();
-        TextBoxPortSim.Text = _settings.PortSim.ToString();
+        if (SettingsIsValid())
+        {
+            TextBoxComAxi.Text = _settings.PortAxiName;
+            TextBoxComDiscovery.Text = _settings.PortDiscoveryName;
+            TextBoxPath.Text = _settings.PathReport;
+            TextBoxIsleep.Text = _settings.MaxCurrentDeepSleep.ToString();
+            TextBoxIgsm.Text = _settings.MaxCurrentGsm.ToString();
+            TextBoxIpeack.Text = _settings.MaxCurrentPeak.ToString();
+            TextBoxIsleepGsm.Text = _settings.MaxCurrentGsmSleep.ToString();
+            TextBoxTimeOn.Text = _settings.MaxTimeReady.ToString();
+            TextBoxPortSim.Text = _settings.PortSim.ToString();
+        }
+
     }
 
     private readonly Window _parent;

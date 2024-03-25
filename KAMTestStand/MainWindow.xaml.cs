@@ -32,14 +32,17 @@ namespace KAMTestStand
             _settings = new SettingsData();
             ReadSettingsFile(_settings);
             _settingsWindow = new Setting(this, _settings);
-            
-            _comData = new ComData(_settings);
-            _comData.Init();
-            var _tcpData = new TcpData(_settings);
-            var _report = new Report(_settings);
-            var _dataExchange = new DataExchange(_comData, _tcpData, _report, entityList);
-            _comData.ParseDataAppSet(_dataExchange.ParseData);
 
+            if (_settingsWindow.SettingsIsValid())
+            {
+                _comData = new ComData(_settings);
+                _comData.Init();
+                var _tcpData = new TcpData(_settings);
+                var _report = new Report(_settings);
+                var _dataExchange = new DataExchange(_comData, _tcpData, _report, entityList);
+                _comData.ParseDataAppSet(_dataExchange.ParseData);
+            }
+            
             InitializeComponent();
             DataGrid.ItemsSource = entityList.Data;
 

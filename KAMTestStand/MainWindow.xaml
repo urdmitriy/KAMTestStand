@@ -58,123 +58,133 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-232 #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Rs2321Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-232 #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Rs2322Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-485 #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Rs4851Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-485 #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Rs4852Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Di1Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Di2Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di счет. #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=DiCnt1Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di счет. #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=DiCnt2Res}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="KAM bus" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=KamRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сон" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=ToSleepRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сон+GSM" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=ToSleepWithGsmRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 
-                <DataGridTextColumn Header="2G" 
+                <DataGridTextColumn Header="2G #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Sim1Registered2GRes}" 
                                     Width="*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="3G" 
+                <DataGridTextColumn Header="3G #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=Sim1Registered3GRes}" 
+                                    Width="*">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="2G #2" 
+                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
+                                    Binding="{Binding Path=Sim2Registered2GRes}" 
+                                    Width="*">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="3G #2" 
+                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
+                                    Binding="{Binding Path=Sim2Registered3GRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="NTP" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=TimeSyncRes}" 
                                     Width="*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Кнопка 1" 
+                <DataGridTextColumn Header="Кнопка 1н" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=ButtonShortRes}" 
                                     Width="*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Кнопка 2" 
+                <DataGridTextColumn Header="Кнопка 2н" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=ButtonDoubleRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Кнопка длин." 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=ButtonLongRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Копка Reset" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=ButtonResetRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="LED" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=LedLestRes}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Iсон" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=CurrentSleepUaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Iсон+gsm" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=CurrentGsmAndSleepMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Igsm" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=CurrentGsmMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Imax" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=CurrentGsmPeakMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Iac" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=Date}" 
+                                    Binding="{Binding Path=CurrentAcUaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
             </DataGrid.Columns>

@@ -15,8 +15,7 @@ public class ComData
     public ComData(SettingsData settingsData)
     {
         _settingsData = settingsData;
-        _portAxi = new SerialPort(_settingsData.PortAxiName, 115200, Parity.None, 8, StopBits.One);
-        _portDiscovery = new SerialPort(_settingsData.PortDiscoveryName, 115200, Parity.None, 8, StopBits.One);
+        
     }
 
     private readonly SettingsData _settingsData;
@@ -34,6 +33,7 @@ public class ComData
         bool result = true;
         try
         {
+            _portDiscovery = new SerialPort(_settingsData.PortDiscoveryName, 115200, Parity.None, 8, StopBits.One);
             _portDiscovery?.Open();
             if (_portDiscovery != null) _portDiscovery.DataReceived += PortDiscoveryOnDataReceived;
         }
@@ -45,6 +45,7 @@ public class ComData
 
         try
         {
+            _portAxi = new SerialPort(_settingsData.PortAxiName, 115200, Parity.None, 8, StopBits.One);
             _portAxi?.Open();
             if (_portAxi != null) _portAxi.DataReceived += PortAxiOnDataReceived;
         }
