@@ -7,6 +7,7 @@
         Title="Стенд тестирования КАМ" Height="800" Width="1300" WindowState="Maximized"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:kamTestStand="clr-namespace:KAMTestStand"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -33,6 +34,21 @@
             </Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
+        
+        <kamTestStand:SetColorCell x:Key="SetColorCell"></kamTestStand:SetColorCell>
+        <Style x:Key="StyleCellStatus" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Rs2321Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Background" Value="{Binding Path=Rs2322Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Background" Value="{Binding Path=Rs4851Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Background" Value="{Binding Path=Rs4852Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Background" Value="{Binding Path=Di1Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Background" Value="{Binding Path=Di2Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Background" Value="{Binding Path=DiCnt1Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Background" Value="{Binding Path=DiCnt2Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+            <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
+        </Style>
+        
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -59,41 +75,49 @@
                 <DataGridTextColumn Header="RS-232 #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs2321Res}" 
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-232 #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs2322Res}" 
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-485 #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs4851Res}" 
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-485 #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs4852Res}" 
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Di1Res}" 
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Di2Res}" 
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di счет. #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=DiCnt1Res}" 
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di счет. #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=DiCnt2Res}" 
+                                    Binding="{Binding Path=DiCnt2Res}"
+                                    CellStyle="{StaticResource StyleCellStatus}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="KAM bus" 
