@@ -29,15 +29,19 @@ namespace KAMTestStand
     {
         private readonly SettingsData _settings;
         readonly Setting _settingsWindow;
+        private readonly LogIncomMessage _logIncomMessage;
         private readonly ComData _comData;
         private readonly EntityList _entityList;
+        private readonly List _logIncomMessageList;
         public MainWindow()
         {
             _entityList = new EntityList(DataGridUpdate);
+            _logIncomMessageList = new List();
             _settings = new SettingsData();
             ReadSettingsFile(_settings);
             _settingsWindow = new Setting(this, _settings);
-
+            _logIncomMessage = new LogIncomMessage(_logIncomMessageList);
+            
             if (_settingsWindow.SettingsIsValid())
             {
                 _comData = new ComData(_settings);
@@ -47,9 +51,11 @@ namespace KAMTestStand
                 var _dataExchange = new DataExchange(_comData, _tcpData, _report, _entityList, MessageInfoPrint);
                 _comData.ParseDataAppSet(_dataExchange.ParseData);
             }
-            
             InitializeComponent();
             DataGrid.ItemsSource = _entityList.Data;
+            
+            _entityList.AddDataEntity(new Entity(){SerialNumberVal = 787878, Rs2321Res = ResultE.StatusPass, Rs2322Res = ResultE.StatusError});
+            DataGridUpdate();
         }
 
         private void ButtonExit_OnClick(object sender, RoutedEventArgs e)
@@ -113,6 +119,11 @@ namespace KAMTestStand
         private void MessageInfoPrint(string message)
         {
             Dispatcher.Invoke(() => { TextBlockMessage.Text = message;});
+        }
+
+        private void ButtonIncomMessage_OnClick(object sender, RoutedEventArgs e)
+        {
+            _logIncomMessage.Show();
         }
     }
 }

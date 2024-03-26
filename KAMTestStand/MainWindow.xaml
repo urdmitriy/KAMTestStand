@@ -36,19 +36,111 @@
         </Style>
         
         <kamTestStand:SetColorCell x:Key="SetColorCell"></kamTestStand:SetColorCell>
-        <Style x:Key="StyleCellStatus" TargetType="{x:Type DataGridCell}">
+        <Style x:Key="StyleCellStatusRs2321" TargetType="{x:Type DataGridCell}">
             <Setter Property="Background" Value="{Binding Path=Rs2321Res, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Background" Value="{Binding Path=Rs2322Res, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Background" Value="{Binding Path=Rs4851Res, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Background" Value="{Binding Path=Rs4852Res, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Background" Value="{Binding Path=Di1Res, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Background" Value="{Binding Path=Di2Res, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Background" Value="{Binding Path=DiCnt1Res, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Background" Value="{Binding Path=DiCnt2Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Rs2321Res, Converter={StaticResource SetColorCell}}"></Setter>
             <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-            <Setter Property="TextBlock.VerticalAlignment" Value="Center"></Setter>
         </Style>
-        
+        <Style x:Key="StyleCellStatusRs2322" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Rs2322Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Rs2322Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusRs4851" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Rs4851Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Rs4851Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusRs4852" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Rs4852Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Rs4852Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusDi1" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Di1Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Di1Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusDi2" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Di2Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Di2Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusDiCount1" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=DiCnt1Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=DiCnt1Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusDiCount2" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=DiCnt2Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=DiCnt2Res, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusKam" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=KamRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=KamRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusSleep" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=ToSleepRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=ToSleepRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusSleepGsm" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=ToSleepWithGsmRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=ToSleepWithGsmRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusSim12G" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Sim1Registered2GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Sim1Registered2GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusSim13G" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Sim1Registered3GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Sim1Registered3GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusSim22G" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Sim2Registered2GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Sim2Registered2GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusSim23G" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=Sim2Registered3GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=Sim2Registered3GRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusNtp" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=TimeSyncRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=TimeSyncRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusButtonShort" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=ButtonShortRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=ButtonShortRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusButtonDbl" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=ButtonDoubleRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=ButtonDoubleRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusButtonLong" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=ButtonLongRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=ButtonLongRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusButtonReset" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=ButtonResetRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=ButtonResetRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
+        <Style x:Key="StyleCellStatusLed" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=LedLestRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=LedLestRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -61,7 +153,7 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Модель"
                                     Binding="{Binding Path=DeviceIdVal}"
-                                    Width="2*">
+                                    Width="1.5*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сер.№" 
                                     Binding="{Binding Path= SerialNumberVal}" 
@@ -75,139 +167,147 @@
                 <DataGridTextColumn Header="RS-232 #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs2321Res}" 
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusRs2321}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-232 #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs2322Res}" 
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusRs2322}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-485 #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs4851Res}" 
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusRs4851}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-485 #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Rs4852Res}" 
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusRs4852}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Di1Res}" 
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusDi1}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Di2Res}" 
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusDi2}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di счет. #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=DiCnt1Res}" 
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusDiCount1}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Di счет. #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=DiCnt2Res}"
-                                    CellStyle="{StaticResource StyleCellStatus}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusDiCount2}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="KAM bus" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=KamRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusKam}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сон" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ToSleepRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusSleep}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сон+GSM" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ToSleepWithGsmRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusSleepGsm}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 
                 <DataGridTextColumn Header="2G #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Sim1Registered2GRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusSim12G}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="3G #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Sim1Registered3GRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusSim13G}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="2G #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Sim2Registered2GRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusSim22G}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="3G #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Sim2Registered3GRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusSim23G}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="NTP" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=TimeSyncRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusNtp}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Кнопка 1н" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ButtonShortRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusButtonShort}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Кнопка 2н" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ButtonDoubleRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusButtonDbl}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Кнопка длин." 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ButtonLongRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusButtonLong}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Копка Reset" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ButtonResetRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusButtonReset}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="LED" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=LedLestRes}" 
-                                    Width="*">
+                                    CellStyle="{StaticResource StyleCellStatusLed}"
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Iсон" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=CurrentSleepUaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Iсон+gsm" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=CurrentGsmAndSleepMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Igsm" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=CurrentGsmMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Imax" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=CurrentGsmPeakMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Iac" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=CurrentAcUaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
@@ -223,7 +323,7 @@
             <StackPanel Grid.Column="0"  Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Name="ButtonClear" Click="ButtonClear_OnClick" Margin="1">Очистить</Button>
                 <Button Name="ButtonSettings" Click="ButtonSettings_OnClick" Margin="1">Настройки</Button>
-                <Button Name="ButtonExit3" Margin="1">История событий</Button>
+                <Button Name="ButtonIncomMessage" Click="ButtonIncomMessage_OnClick" Margin="1">История событий</Button>
                 <Button Name="ButtonExit4" Margin="1">Генерировать отчет</Button>
                 <TextBlock Name="TextBlockMessage" Margin="1">Последнее исходящее событие</TextBlock>
             </StackPanel>

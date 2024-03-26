@@ -15,11 +15,11 @@ public class SetColorCell : IValueConverter
             case ResultE.StatusError:
                 return new SolidColorBrush(Colors.Red);
             case ResultE.StatusNotStart:
-                return new SolidColorBrush(Colors.Coral);
+                return new SolidColorBrush(Colors.Gold);
             case ResultE.StatusTesting:
                 return new SolidColorBrush(Colors.BlueViolet);
             case ResultE.StatusPass:
-                return new SolidColorBrush(Colors.Green);
+                return new SolidColorBrush(Colors.ForestGreen);
             case ResultE.StatusNoAccess:
                 return new SolidColorBrush(Colors.Black);
             case ResultE.StatusWait:
