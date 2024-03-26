@@ -133,8 +133,7 @@ namespace KAMTestStand
             if (entity.ResetRes != 0) modifyEntity.ResetRes = entity.ResetRes;
             if (entity.IoCntVal != 0) modifyEntity.IoCntVal = entity.IoCntVal;
             if (entity.IoCntRes != 0) modifyEntity.IoCntRes = entity.IoCntRes;
-
-            //_dataGridUpdateApp();
+            _dataGridUpdateApp();
         }
         private Entity? FindEntity(int serialNumber)
         {

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -99,13 +100,14 @@ namespace KAMTestStand
 
         private void ButtonClear_OnClick(object sender, RoutedEventArgs e)
         {
-            //_entityList.Data.Clear();
+            _entityList.Data.Clear();
             DataGridUpdate();
         }
 
         private void DataGridUpdate()
         {
-            DataGrid.Items.Refresh();
+            Dispatcher.Invoke(()=>DataGrid.Items.Refresh()) ;
         }
+        
     }
 }
