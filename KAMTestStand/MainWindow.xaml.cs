@@ -21,6 +21,8 @@ namespace KAMTestStand
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public delegate void ParseDataApp(string data);
+
+    public delegate void DataGridUpdateApp();
     public partial class MainWindow : Window
     {
         private readonly SettingsData _settings;
@@ -29,7 +31,7 @@ namespace KAMTestStand
         private readonly EntityList _entityList;
         public MainWindow()
         {
-            _entityList = new EntityList();
+            _entityList = new EntityList(DataGridUpdate);
             _settings = new SettingsData();
             ReadSettingsFile(_settings);
             _settingsWindow = new Setting(this, _settings);
@@ -46,9 +48,6 @@ namespace KAMTestStand
             
             InitializeComponent();
             DataGrid.ItemsSource = _entityList.Data;
-
-            _entityList.AddDataEntity(new Entity() { DeviceIdVal =  1, ReadyTimeVal = 10, SerialNumberVal = 787878});
-
         }
 
         private void ButtonExit_OnClick(object sender, RoutedEventArgs e)
@@ -100,7 +99,13 @@ namespace KAMTestStand
 
         private void ButtonClear_OnClick(object sender, RoutedEventArgs e)
         {
-            _entityList.Data.Clear();
+            //_entityList.Data.Clear();
+            DataGridUpdate();
+        }
+
+        private void DataGridUpdate()
+        {
+            DataGrid.Items.Refresh();
         }
     }
 }
