@@ -22,6 +22,7 @@ namespace KAMTestStand
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public delegate void ParseDataApp(string data);
+    public delegate void MessagePrintApp(string data);
 
     public delegate void DataGridUpdateApp();
     public partial class MainWindow : Window
@@ -43,7 +44,7 @@ namespace KAMTestStand
                 _comData.Init();
                 var _tcpData = new TcpData(_settings);
                 var _report = new Report(_settings);
-                var _dataExchange = new DataExchange(_comData, _tcpData, _report, _entityList);
+                var _dataExchange = new DataExchange(_comData, _tcpData, _report, _entityList, MessageInfoPrint);
                 _comData.ParseDataAppSet(_dataExchange.ParseData);
             }
             
@@ -108,6 +109,10 @@ namespace KAMTestStand
         {
             Dispatcher.Invoke(()=>DataGrid.Items.Refresh()) ;
         }
-        
+
+        private void MessageInfoPrint(string message)
+        {
+            Dispatcher.Invoke(() => { TextBlockMessage.Text = message;});
+        }
     }
 }

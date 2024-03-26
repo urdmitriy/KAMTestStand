@@ -201,7 +201,7 @@
                 <Button Name="ButtonSettings" Click="ButtonSettings_OnClick" Margin="1">Настройки</Button>
                 <Button Name="ButtonExit3" Margin="1">История событий</Button>
                 <Button Name="ButtonExit4" Margin="1">Генерировать отчет</Button>
-                <TextBlock Margin="1">Последнее исходящее событие</TextBlock>
+                <TextBlock Name="TextBlockMessage" Margin="1">Последнее исходящее событие</TextBlock>
             </StackPanel>
             <StackPanel Grid.Column="1"  Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Name="ButtonExit" Click = "ButtonExit_OnClick" Margin="1">Выйти</Button>

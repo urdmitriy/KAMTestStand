@@ -5,27 +5,35 @@ namespace KAMTestStand;
 
 public class DataExchange
 {
-    public DataExchange(ComData comData, TcpData tcpData, Report report, EntityList entityList)
+    public DataExchange(ComData comData, TcpData tcpData, Report report, EntityList entityList, MessagePrintApp messagePrintApp)
     {
         _comData = comData;
         _tcpData = tcpData;
         _report = report;
         _entityList = entityList;
+        _messagePrintApp = messagePrintApp;
     }
     
     private readonly ComData _comData;
     private readonly TcpData _tcpData;
     private readonly Report _report;
     private readonly EntityList _entityList;
+    private readonly MessagePrintApp _messagePrintApp;
     
     private void IncomDataHandler(int serialNum, int commandId, DataT data)
     {
+        if (serialNum == 0) return;
+        
         switch ((IoNb)commandId)
         {
             case IoNb.Sim1CountData2G:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    _tcpData.SendTestTcpData(ParseIpAddress(_entityList.Data.FirstOrDefault((x)=>x.SerialNumberVal == serialNum)!.Sim1IpAddr2GVal));
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim1IpAddr2GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp($"Отправлены данные на {ipaddr}");
                 }
                 else
                 {
@@ -36,7 +44,11 @@ public class DataExchange
             case IoNb.Sim1CountData3G:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    _tcpData.SendTestTcpData(ParseIpAddress(_entityList.Data.FirstOrDefault((x)=>x.SerialNumberVal == serialNum)!.Sim1IpAddr2GVal));
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim1IpAddr2GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp($"Отправлены данные на {ipaddr}");
                 }
                 else
                 {
@@ -47,7 +59,11 @@ public class DataExchange
             case IoNb.Sim2CountData2G:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    _tcpData.SendTestTcpData(ParseIpAddress(_entityList.Data.FirstOrDefault((x)=>x.SerialNumberVal == serialNum)!.Sim1IpAddr2GVal));
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim2IpAddr2GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp($"Отправлены данные на {ipaddr}");
                 }
                 else
                 {
@@ -58,7 +74,11 @@ public class DataExchange
             case IoNb.Sim2CountData3G:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    _tcpData.SendTestTcpData(ParseIpAddress(_entityList.Data.FirstOrDefault((x)=>x.SerialNumberVal == serialNum)!.Sim1IpAddr2GVal));
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim2IpAddr2GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp($"Отправлены данные на {ipaddr}");
                 }
                 else
                 {
@@ -69,7 +89,7 @@ public class DataExchange
             case IoNb.DiCnt1:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    Console.WriteLine("Send data to discovery...");
+                    _messagePrintApp("Данные отправлены на Discovery (cnt1)");
 
                     byte[] dataByteArray = new byte[16];
                     dataByteArray[0] = Convert.ToByte(commandId);
@@ -85,7 +105,7 @@ public class DataExchange
             case IoNb.DiCnt2:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    Console.WriteLine("Send data to discovery...");
+                    _messagePrintApp("Данные отправлены на Discovery (cnt2)");
 
                     byte[] dataByteArray = new byte[16];
                     dataByteArray[0] = Convert.ToByte(commandId);
