@@ -26,6 +26,8 @@ public class DataExchange
     private readonly MessagePrintApp _messagePrintApp;
     private List<String> _logIncomMessageList;
     private DataGridUpdateApp _dataGridUpdateApp;
+    private DateTime _timeRunDi1Count;
+    private DateTime _timeRunDi2Count;
 
     private void IncomDataHandler(int serialNum, int commandId, DataT data)
     {
@@ -100,6 +102,7 @@ public class DataExchange
             case IoNb.DiCnt1:
                 if (data.Result == ResultE.StatusTesting)
                 {
+                    if ((DateTime.Now - _timeRunDi1Count) < TimeSpan.FromSeconds(30)) return;
                     _messagePrintApp("Данные отправлены на Discovery (cnt1)");
 
                     byte[] dataByteArray = new byte[16];
@@ -107,6 +110,7 @@ public class DataExchange
                     dataByteArray[4] = Convert.ToByte(ResultE.StatusTesting);
                     _comData.SendDataDiscovery(dataByteArray, 0, 16);
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, DiCnt1Res = data.Result, DiCnt1Val = data.Value});
+                    _timeRunDi1Count = DateTime.Now;
                 }
                 else
                 {
@@ -117,6 +121,7 @@ public class DataExchange
             case IoNb.DiCnt2:
                 if (data.Result == ResultE.StatusTesting)
                 {
+                    if ((DateTime.Now - _timeRunDi2Count) < TimeSpan.FromSeconds(30)) return;
                     _messagePrintApp("Данные отправлены на Discovery (cnt2)");
 
                     byte[] dataByteArray = new byte[16];
@@ -124,6 +129,7 @@ public class DataExchange
                     dataByteArray[4] = Convert.ToByte(ResultE.StatusTesting);
                     _comData.SendDataDiscovery(dataByteArray, 0, 16);
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, DiCnt2Res = data.Result, DiCnt2Val = data.Value});
+                    _timeRunDi2Count = DateTime.Now;
                 }
                 else
                 {
