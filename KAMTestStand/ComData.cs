@@ -5,6 +5,7 @@ using System.IO.Ports;
 using System.Net.Sockets;
 using System.Text;
 using System.Windows;
+using System.Windows.Documents;
 using GrapeCity.Documents.Excel;
 using KAM_Report;
 
@@ -15,7 +16,7 @@ public class ComData
     public ComData(SettingsData settingsData)
     {
         _settingsData = settingsData;
-        
+
     }
 
     private readonly SettingsData _settingsData;

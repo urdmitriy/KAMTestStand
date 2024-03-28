@@ -35,7 +35,14 @@
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
         
+        <kamTestStand:ModelIdConverter x:Key="ModelIdConverter"></kamTestStand:ModelIdConverter>
+        
         <kamTestStand:SetColorCell x:Key="SetColorCell"></kamTestStand:SetColorCell>
+        <Style x:Key="StyleCellStatusReadyTime" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=ReadyTimeRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=ReadyTimeRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
         <Style x:Key="StyleCellStatusRs2321" TargetType="{x:Type DataGridCell}">
             <Setter Property="Background" Value="{Binding Path=Rs2321Res, Converter={StaticResource SetColorCell}}"></Setter>
             <Setter Property="Foreground" Value="{Binding Path=Rs2321Res, Converter={StaticResource SetColorCell}}"></Setter>
@@ -152,7 +159,7 @@
         <DataGrid Grid.Row="1" Name="DataGrid" IsReadOnly="True" AutoGenerateColumns="False" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Модель"
-                                    Binding="{Binding Path=DeviceIdVal}"
+                                    Binding="{Binding Path=DeviceIdRes, Converter={StaticResource ModelIdConverter}}"
                                     Width="1.5*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Сер.№" 
@@ -161,8 +168,9 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Время вкл." 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=ReadyTimeVal}" 
-                                    Width="*">
+                                    Binding="{Binding Path=ReadyTimeRes}" 
+                                    CellStyle="{StaticResource StyleCellStatusReadyTime}" 
+                                    Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-232 #1" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 

@@ -23,38 +23,40 @@ namespace KAMTestStand
     /// </summary>
     public delegate void ParseDataApp(string data);
     public delegate void MessagePrintApp(string data);
-
     public delegate void DataGridUpdateApp();
+
     public partial class MainWindow : Window
     {
-        private readonly SettingsData _settings;
-        readonly Setting _settingsWindow;
-        private readonly LogIncomMessage _logIncomMessage;
+        private readonly Setting _settingsWindow;
+        private LogIncomMessage _logIncomMessageWindow;
         private readonly ComData _comData;
         private readonly EntityList _entityList;
-        private readonly List _logIncomMessageList;
+        private List<String> _logIncomMessageList;
+
         public MainWindow()
         {
             _entityList = new EntityList(DataGridUpdate);
-            _logIncomMessageList = new List();
-            _settings = new SettingsData();
-            ReadSettingsFile(_settings);
-            _settingsWindow = new Setting(this, _settings);
-            _logIncomMessage = new LogIncomMessage(_logIncomMessageList);
+            _logIncomMessageList = new List<String>();
             
-            if (_settingsWindow.SettingsIsValid())
-            {
-                _comData = new ComData(_settings);
-                _comData.Init();
-                var _tcpData = new TcpData(_settings);
-                var _report = new Report(_settings);
-                var _dataExchange = new DataExchange(_comData, _tcpData, _report, _entityList, MessageInfoPrint);
-                _comData.ParseDataAppSet(_dataExchange.ParseData);
-            }
+            _logIncomMessageWindow = new LogIncomMessage(_logIncomMessageList);
+
+            var settings = new SettingsData();
+            ReadSettingsFile(settings);
+            _settingsWindow = new Setting(this, settings);
+            
+            _comData = new ComData(settings);
+            _comData.Init();
+            var tcpData = new TcpData(settings);
+            var report = new Report(settings);
+
+            var dataExchange = new DataExchange(_comData, tcpData, report, _entityList, _logIncomMessageList, 
+                MessageInfoPrint, _logIncomMessageWindow.UpdateData);
+            _comData.ParseDataAppSet(dataExchange.ParseData);
+            
             InitializeComponent();
             DataGrid.ItemsSource = _entityList.Data;
             
-            _entityList.AddDataEntity(new Entity(){SerialNumberVal = 787878, Rs2321Res = ResultE.StatusPass, Rs2322Res = ResultE.StatusError});
+            _entityList.AddDataEntity(new Entity(){SerialNumberVal = 123456789, Rs2321Res = ResultE.StatusPass, Rs2322Res = ResultE.StatusError});
             DataGridUpdate();
         }
 
@@ -73,6 +75,7 @@ namespace KAMTestStand
         {
             _comData.Deinit();
             _settingsWindow.Close();
+            _logIncomMessageWindow.Close();
         }
 
         private void MainWindow_OnContentRendered(object? sender, EventArgs e)
@@ -83,7 +86,7 @@ namespace KAMTestStand
             }
         }
 
-        public void ReadSettingsFile(SettingsData setting)
+        private void ReadSettingsFile(SettingsData setting)
         {
             if (File.Exists("settings.txt"))
             {
@@ -92,12 +95,7 @@ namespace KAMTestStand
                 setting.PortAxiName = settings[0];
                 setting.PortDiscoveryName = settings[1];
                 setting.PathReport = settings[2];
-                int.TryParse(settings[3], out setting.MaxCurrentDeepSleep);
-                int.TryParse(settings[4], out setting.MaxCurrentGsm);
-                int.TryParse(settings[5], out setting.MaxCurrentPeak);
-                int.TryParse(settings[6], out setting.MaxCurrentGsmSleep);
-                int.TryParse(settings[7], out setting.MaxTimeReady);
-                int.TryParse(settings[8], out setting.PortSim);
+                int.TryParse(settings[3], out setting.PortSim);
             }
             else
             {
@@ -123,7 +121,7 @@ namespace KAMTestStand
 
         private void ButtonIncomMessage_OnClick(object sender, RoutedEventArgs e)
         {
-            _logIncomMessage.Show();
+            _logIncomMessageWindow.Show();
         }
     }
 }

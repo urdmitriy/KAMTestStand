@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:KAMTestStand"
         mc:Ignorable="d"
-        Title="Настройки" Height="400" Width="500"
+        Title="Настройки" Height="250" Width="500"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -28,15 +28,10 @@
                 <RowDefinition Height="30"></RowDefinition> 
                 <RowDefinition Height="30"></RowDefinition> 
                 <RowDefinition Height="30"></RowDefinition> 
-                <RowDefinition Height="30"></RowDefinition> 
-                <RowDefinition Height="30"></RowDefinition> 
-                <RowDefinition Height="30"></RowDefinition> 
-                <RowDefinition Height="30"></RowDefinition> 
-                <RowDefinition Height="30"></RowDefinition> 
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="1.5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
             <TextBlock Grid.Row="0" Grid.Column="0" Margin="1">COM порт AxiDebug</TextBlock>
@@ -51,20 +46,6 @@
             <TextBlock Grid.Row="3" Grid.Column="0" Margin="1">Путь для сохранения отчетов</TextBlock>
             <TextBox Grid.Row="3" Grid.Column="1" Name="TextBoxPath" Margin="1"></TextBox>
             
-            <TextBlock Grid.Row="4" Grid.Column="0" Margin="1">Допустимый ток в глубоком сне, мкА</TextBlock>
-            <TextBox Grid.Row="4" Grid.Column="1" Name="TextBoxIsleep" Margin="1"></TextBox>
-            
-            <TextBlock Grid.Row="5" Grid.Column="0" Margin="1">Допустимый ток в глубоком сне+gsm, мА</TextBlock>
-            <TextBox Grid.Row="5" Grid.Column="1" Name="TextBoxIsleepGsm" Margin="1"></TextBox>
-            
-            <TextBlock Grid.Row="6" Grid.Column="0" Margin="1">Допустимый ток в gsm, мА</TextBlock>
-            <TextBox Grid.Row="6" Grid.Column="1" Name="TextBoxIgsm" Margin="1"></TextBox>
-            
-            <TextBlock Grid.Row="7" Grid.Column="0" Margin="1">Допустимый пиковый ток, мА</TextBlock>
-            <TextBox Grid.Row="7" Grid.Column="1" Name="TextBoxIpeack" Margin="1"></TextBox>
-            
-            <TextBlock Grid.Row="8" Grid.Column="0" Margin="1">Допустимое время выхода в готовность, с</TextBlock>
-            <TextBox Grid.Row="8" Grid.Column="1" Name="TextBoxTimeOn" Margin="1"></TextBox>
         </Grid>
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="1">
             <Button Name="ButtonCancel" Click="ButtonCancel_OnClick" Margin="1" VerticalAlignment="Bottom">Отмена</Button>

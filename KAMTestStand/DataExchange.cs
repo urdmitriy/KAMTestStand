@@ -1,17 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Documents;
 
 namespace KAMTestStand;
 
 public class DataExchange
 {
-    public DataExchange(ComData comData, TcpData tcpData, Report report, EntityList entityList, MessagePrintApp messagePrintApp)
+    public DataExchange(ComData comData, TcpData tcpData, Report report, EntityList entityList, 
+        List<String> logIncomMessageList, MessagePrintApp messagePrintApp, DataGridUpdateApp dataGridUpdateApp)
     {
         _comData = comData;
         _tcpData = tcpData;
         _report = report;
         _entityList = entityList;
         _messagePrintApp = messagePrintApp;
+        _logIncomMessageList = logIncomMessageList;
+        _dataGridUpdateApp = dataGridUpdateApp;
     }
     
     private readonly ComData _comData;
@@ -19,7 +24,9 @@ public class DataExchange
     private readonly Report _report;
     private readonly EntityList _entityList;
     private readonly MessagePrintApp _messagePrintApp;
-    
+    private List<String> _logIncomMessageList;
+    private DataGridUpdateApp _dataGridUpdateApp;
+
     private void IncomDataHandler(int serialNum, int commandId, DataT data)
     {
         if (serialNum == 0) return;
@@ -34,6 +41,7 @@ public class DataExchange
                             .Sim1IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
                     _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr2GRes = data.Result, Sim1IpAddr2GVal = data.Value});
                 }
                 else
                 {
@@ -49,6 +57,7 @@ public class DataExchange
                             .Sim1IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
                     _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr3GRes = data.Result, Sim1IpAddr3GVal = data.Value});
                 }
                 else
                 {
@@ -64,6 +73,7 @@ public class DataExchange
                             .Sim2IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
                     _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr3GRes = data.Result, Sim2IpAddr3GVal = data.Value});
                 }
                 else
                 {
@@ -79,6 +89,7 @@ public class DataExchange
                             .Sim2IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
                     _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr3GRes = data.Result, Sim2IpAddr3GVal = data.Value});
                 }
                 else
                 {
@@ -95,6 +106,7 @@ public class DataExchange
                     dataByteArray[0] = Convert.ToByte(commandId);
                     dataByteArray[4] = Convert.ToByte(ResultE.StatusTesting);
                     _comData.SendDataDiscovery(dataByteArray, 0, 16);
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, DiCnt1Res = data.Result, DiCnt1Val = data.Value});
                 }
                 else
                 {
@@ -111,6 +123,7 @@ public class DataExchange
                     dataByteArray[0] = Convert.ToByte(commandId);
                     dataByteArray[4] = Convert.ToByte(ResultE.StatusTesting);
                     _comData.SendDataDiscovery(dataByteArray, 0, 16);
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, DiCnt2Res = data.Result, DiCnt2Val = data.Value});
                 }
                 else
                 {
@@ -307,7 +320,8 @@ public class DataExchange
     
     public void ParseData(string data)
     {
-        Console.WriteLine(data);
+        _logIncomMessageList.Add(data);
+        _dataGridUpdateApp();
         var positionSerialBegin = data.IndexOf("<SerialNum>", StringComparison.Ordinal) + "<SerialNum>".Length;
         var positionSerialEnd = data.IndexOf("</SerialNum>", StringComparison.Ordinal);
         var positionIdBegin = data.IndexOf("<CommandId>", StringComparison.Ordinal) + "<CommandId>".Length;
