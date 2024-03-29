@@ -121,7 +121,7 @@ public class DataExchange
             case IoNb.DiCnt2:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    if ((DateTime.Now - _timeRunDi2Count) < TimeSpan.FromSeconds(30)) return;
+                    if ((DateTime.Now - _timeRunDi2Count) < TimeSpan.FromSeconds(2)) return;
                     _messagePrintApp("Данные отправлены на Discovery (cnt2)");
 
                     byte[] dataByteArray = new byte[16];
