@@ -34,7 +34,17 @@
             </Setter>
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
-        
+        <Style x:Key="ColumnHeaderWrapStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="ContentTemplate">
+                <Setter.Value>
+                    <DataTemplate>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding}">
+                        </TextBlock>
+                    </DataTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+        </Style>
         <kamTestStand:ModelIdConverter x:Key="ModelIdConverter"></kamTestStand:ModelIdConverter>
         
         <kamTestStand:SetColorCell x:Key="SetColorCell"></kamTestStand:SetColorCell>
@@ -108,6 +118,11 @@
             <Setter Property="Foreground" Value="{Binding Path=Sim1Registered3GRes, Converter={StaticResource SetColorCell}}"></Setter>
             <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
         </Style>
+        <Style x:Key="StyleCellStatusAc" TargetType="{x:Type DataGridCell}">
+            <Setter Property="Background" Value="{Binding Path=CurrentAcUaRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="Foreground" Value="{Binding Path=CurrentAcUaRes, Converter={StaticResource SetColorCell}}"></Setter>
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+        </Style>
         <Style x:Key="StyleCellStatusSim22G" TargetType="{x:Type DataGridCell}">
             <Setter Property="Background" Value="{Binding Path=Sim2Registered2GRes, Converter={StaticResource SetColorCell}}"></Setter>
             <Setter Property="Foreground" Value="{Binding Path=Sim2Registered2GRes, Converter={StaticResource SetColorCell}}"></Setter>
@@ -151,12 +166,33 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"></RowDefinition>
+            <RowDefinition Height="50">
+                </RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Margin="5">Результаты тестирования:</TextBlock>
-        <DataGrid Grid.Row="1" Name="DataGrid" IsReadOnly="True" AutoGenerateColumns="False" Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="4*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Grid.Row="0" Margin="5" VerticalAlignment="Center">Результаты тестирования:</TextBlock>
+        <StackPanel Grid.Row="0" Grid.Column="1" Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center" Margin="1 0 1 0" >Статус модема:</TextBlock>
+            <TextBlock Name="TextBlockModemState" FontSize="20" TextAlignment="Center" VerticalAlignment="Center" Margin="1 0 1 0"></TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2" Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock TextAlignment="Center" VerticalAlignment="Center" >Текущее устройство тестирования:</TextBlock>
+            <TextBlock Name="TextBlockDeviceNum" FontSize="30" Width="50" TextAlignment="Center" VerticalAlignment="Center" >1</TextBlock>
+            <TextBlock Background="ForestGreen" Width="80" TextAlignment="Center" VerticalAlignment="Center" >Успешно</TextBlock>
+            <TextBlock Background="Red" Width="80" TextAlignment="Center" VerticalAlignment="Center"  >Ошибка</TextBlock>
+            <TextBlock Background="Gold" Width="80" TextAlignment="Center" VerticalAlignment="Center" >Не запущено</TextBlock>
+            <TextBlock Background="BlueViolet" Foreground="Bisque" TextAlignment="Center" VerticalAlignment="Center" >Тестирование</TextBlock>
+            <TextBlock Background="Gray"  Width="80" TextAlignment="Center" VerticalAlignment="Center" >Ожидание</TextBlock>
+            <TextBlock Background="Black" Foreground="Bisque" Width="80" TextAlignment="Center" VerticalAlignment="Center" >Не доступно</TextBlock>
+            
+        </StackPanel>
+        <DataGrid  Grid.Column="0"  Grid.Row="1" Grid.ColumnSpan="3" Name="DataGrid" IsReadOnly="True" AutoGenerateColumns="False" Background="White">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Модель"
                                     Binding="{Binding Path=DeviceIdRes, Converter={StaticResource ModelIdConverter}}"
@@ -251,6 +287,12 @@
                                     CellStyle="{StaticResource StyleCellStatusSim13G}"
                                     Width="0.7*">
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="AC" 
+                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
+                                    Binding="{Binding Path=CurrentAcUaRes}" 
+                                    CellStyle="{StaticResource StyleCellStatusAc}"
+                                    Width="0.7*">
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="2G #2" 
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=Sim2Registered2GRes}" 
@@ -299,23 +341,28 @@
                                     CellStyle="{StaticResource StyleCellStatusLed}"
                                     Width="0.7*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Iсон" 
+                <DataGridTextColumn Header="Iсон, мкА" 
+                                    HeaderStyle="{StaticResource ColumnHeaderWrapStyle}"
                                     Binding="{Binding Path=CurrentSleepUaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Iсон+gsm" 
+                <DataGridTextColumn Header="Iсон+gsm, мкА" 
+                                    HeaderStyle="{StaticResource ColumnHeaderWrapStyle}"
                                     Binding="{Binding Path=CurrentGsmAndSleepMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Igsm" 
+                <DataGridTextColumn Header="Igsm, мА" 
+                                    HeaderStyle="{StaticResource ColumnHeaderWrapStyle}"
                                     Binding="{Binding Path=CurrentGsmMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Imax" 
+                <DataGridTextColumn Header="Imax, мА"
+                                    HeaderStyle="{StaticResource ColumnHeaderWrapStyle}"
                                     Binding="{Binding Path=CurrentGsmPeakMaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Iac" 
+                <DataGridTextColumn Header="Iac, мкА" 
+                                    HeaderStyle="{StaticResource ColumnHeaderWrapStyle}" 
                                     Binding="{Binding Path=CurrentAcUaVal}" 
                                     Width="*">
                 </DataGridTextColumn>
@@ -323,17 +370,17 @@
         </DataGrid>
          
         
-        <Grid Grid.Row="2">
+        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <StackPanel Grid.Column="0"  Margin="5" Orientation="Horizontal" HorizontalAlignment="Left">
-                <Button Name="ButtonClear" Click="ButtonClear_OnClick" Margin="1">Очистить</Button>
-                <Button Name="ButtonSettings" Click="ButtonSettings_OnClick" Margin="1">Настройки</Button>
-                <Button Name="ButtonIncomMessage" Click="ButtonIncomMessage_OnClick" Margin="1">История событий</Button>
-                <Button Name="ButtonExit4" Margin="1">Генерировать отчет</Button>
-                <TextBlock Name="TextBlockMessage" Margin="1">Последнее исходящее событие</TextBlock>
+            <StackPanel Grid.Column="0"  Margin="5" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Name="ButtonClear" Click="ButtonClear_OnClick" Margin="1" Height="30">Очистить</Button>
+                <Button Name="ButtonSettings" Click="ButtonSettings_OnClick" Margin="1" Height="30">Настройки</Button>
+                <Button Name="ButtonIncomMessage" Click="ButtonIncomMessage_OnClick" Margin="1" Height="30">История событий</Button>
+                <Button Name="ButtonReportGenerate" Margin="1" Height="30">Генерировать отчет</Button>
+                <TextBlock Name="TextBlockMessage" Margin="1" Height="30" VerticalAlignment="Center" TextWrapping="Wrap"></TextBlock>
             </StackPanel>
             <StackPanel Grid.Column="1"  Margin="5" Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Name="ButtonExit" Click = "ButtonExit_OnClick" Margin="1">Выйти</Button>

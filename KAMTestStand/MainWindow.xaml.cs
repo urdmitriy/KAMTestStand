@@ -2,19 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace KAMTestStand
 {
@@ -22,23 +11,22 @@ namespace KAMTestStand
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public delegate void ParseDataApp(string data);
-    public delegate void MessagePrintApp(string data);
+    public delegate void MessagePrintApp(TextBlock textBlock, string message);
     public delegate void DataGridUpdateApp();
 
-    public partial class MainWindow : Window
+    public partial class MainWindow
     {
         private readonly Setting _settingsWindow;
-        private LogIncomMessage _logIncomMessageWindow;
+        private readonly LogIncomMessage _logIncomingMessageWindow;
         private readonly ComData _comData;
         private readonly EntityList _entityList;
-        private List<String> _logIncomMessageList;
 
         public MainWindow()
         {
             _entityList = new EntityList(DataGridUpdate);
-            _logIncomMessageList = new List<String>();
+            var logIncomingMessageList = new List<string>();
             
-            _logIncomMessageWindow = new LogIncomMessage(_logIncomMessageList);
+            _logIncomingMessageWindow = new LogIncomMessage(logIncomingMessageList);
 
             var settings = new SettingsData();
             ReadSettingsFile(settings);
@@ -49,8 +37,8 @@ namespace KAMTestStand
             var tcpData = new TcpData(settings);
             var report = new Report(settings);
 
-            var dataExchange = new DataExchange(_comData, tcpData, report, _entityList, _logIncomMessageList, 
-                MessageInfoPrint, _logIncomMessageWindow.UpdateData);
+            var dataExchange = new DataExchange(_comData, tcpData, report, _entityList, logIncomingMessageList, 
+                MessagePrint, _logIncomingMessageWindow.UpdateData, this);
             _comData.ParseDataAppSet(dataExchange.ParseData);
             
             InitializeComponent();
@@ -75,7 +63,7 @@ namespace KAMTestStand
         {
             _comData.Deinit();
             _settingsWindow.Close();
-            _logIncomMessageWindow.Close();
+            _logIncomingMessageWindow.Close();
         }
 
         private void MainWindow_OnContentRendered(object? sender, EventArgs e)
@@ -113,15 +101,15 @@ namespace KAMTestStand
         {
             Dispatcher.Invoke(()=>DataGrid.Items.Refresh()) ;
         }
-
-        private void MessageInfoPrint(string message)
+        
+        private void MessagePrint(TextBlock textBlock, string message)
         {
-            Dispatcher.Invoke(() => { TextBlockMessage.Text = message;});
+            Dispatcher.Invoke(() => { textBlock.Text = message;});
         }
-
+        
         private void ButtonIncomMessage_OnClick(object sender, RoutedEventArgs e)
         {
-            _logIncomMessageWindow.Show();
+            _logIncomingMessageWindow.Show();
         }
     }
 }

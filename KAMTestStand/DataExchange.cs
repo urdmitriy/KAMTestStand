@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows;
 using System.Windows.Documents;
 
 namespace KAMTestStand;
@@ -8,7 +9,7 @@ namespace KAMTestStand;
 public class DataExchange
 {
     public DataExchange(ComData comData, TcpData tcpData, Report report, EntityList entityList, 
-        List<String> logIncomMessageList, MessagePrintApp messagePrintApp, DataGridUpdateApp dataGridUpdateApp)
+        List<String> logIncomMessageList, MessagePrintApp messagePrintApp, DataGridUpdateApp dataGridUpdateApp, MainWindow windowData)
     {
         _comData = comData;
         _tcpData = tcpData;
@@ -17,6 +18,7 @@ public class DataExchange
         _messagePrintApp = messagePrintApp;
         _logIncomMessageList = logIncomMessageList;
         _dataGridUpdateApp = dataGridUpdateApp;
+        _window = windowData;
     }
     
     private readonly ComData _comData;
@@ -24,6 +26,7 @@ public class DataExchange
     private readonly Report _report;
     private readonly EntityList _entityList;
     private readonly MessagePrintApp _messagePrintApp;
+    private MainWindow _window;
     private List<String> _logIncomMessageList;
     private DataGridUpdateApp _dataGridUpdateApp;
     private DateTime _timeRunDi1Count;
@@ -42,7 +45,7 @@ public class DataExchange
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim1IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr2GRes = data.Result, Sim1IpAddr2GVal = data.Value});
                 }
                 else
@@ -58,7 +61,7 @@ public class DataExchange
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim1IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _messagePrintApp(_window.TextBlockMessage, $"Отправлены данные на {ipaddr}");
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr3GRes = data.Result, Sim1IpAddr3GVal = data.Value});
                 }
                 else
@@ -74,7 +77,7 @@ public class DataExchange
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim2IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _messagePrintApp(_window.TextBlockMessage, $"Отправлены данные на {ipaddr}");
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr3GRes = data.Result, Sim2IpAddr3GVal = data.Value});
                 }
                 else
@@ -90,7 +93,7 @@ public class DataExchange
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim2IpAddr2GVal);
                     _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp($"Отправлены данные на {ipaddr}");
+                    _messagePrintApp(_window.TextBlockMessage, $"Отправлены данные на {ipaddr}");
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr3GRes = data.Result, Sim2IpAddr3GVal = data.Value});
                 }
                 else
@@ -102,8 +105,8 @@ public class DataExchange
             case IoNb.DiCnt1:
                 if (data.Result == ResultE.StatusTesting)
                 {
-                    if ((DateTime.Now - _timeRunDi1Count) < TimeSpan.FromSeconds(30)) return;
-                    _messagePrintApp("Данные отправлены на Discovery (cnt1)");
+                    if ((DateTime.Now - _timeRunDi1Count) < TimeSpan.FromSeconds(2)) return;
+                    _messagePrintApp(_window.TextBlockMessage, "Данные отправлены на Discovery (cnt1)");
 
                     byte[] dataByteArray = new byte[16];
                     dataByteArray[0] = Convert.ToByte(commandId);
@@ -122,7 +125,7 @@ public class DataExchange
                 if (data.Result == ResultE.StatusTesting)
                 {
                     if ((DateTime.Now - _timeRunDi2Count) < TimeSpan.FromSeconds(2)) return;
-                    _messagePrintApp("Данные отправлены на Discovery (cnt2)");
+                    _messagePrintApp(_window.TextBlockMessage, "Данные отправлены на Discovery (cnt2)");
 
                     byte[] dataByteArray = new byte[16];
                     dataByteArray[0] = Convert.ToByte(commandId);
@@ -141,6 +144,7 @@ public class DataExchange
                 break;
             
             case IoNb.CurrDevice:
+                _messagePrintApp(_window.TextBlockDeviceNum, data.Value.ToString());
                 break;
             
             case IoNb.DeviceId:
@@ -196,6 +200,39 @@ public class DataExchange
 
             case IoNb.ModemState:
                 _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, ModemStateRes = data.Result, ModemStateVal = data.Value});
+                switch ((ModemStateE)data.Result)
+                {
+                    case ModemStateE.GsmModemStatusPwrOff:
+                        _messagePrintApp(_window.TextBlockModemState, "Питание отключено");
+                        break;
+                    case ModemStateE.GsmModemStatusHwInit:
+                        _messagePrintApp(_window.TextBlockModemState, "Инициализация");
+                        break;
+                    case ModemStateE.GsmModemStatusGsmRegProcessing:
+                        _messagePrintApp(_window.TextBlockModemState, "Регистрация в GSM");
+                        break;
+                    case ModemStateE.GsmModemStatusGsmRegOk:
+                        _messagePrintApp(_window.TextBlockModemState, "Зарегистрирован в GSM");
+                        break;
+                    case ModemStateE.GsmModemStatus2GRegProcessing:
+                        _messagePrintApp(_window.TextBlockModemState, "Регистрация в 2G");
+                        break;
+                    case ModemStateE.GsmModemStatus2GRegOk:
+                        _messagePrintApp(_window.TextBlockModemState, "Зарегистрирован в 2G");
+                        break;
+                    case ModemStateE.GsmModemStatus3GRegProcessing:
+                        _messagePrintApp(_window.TextBlockModemState, "Регистрация в 3G");
+                        break;
+                    case ModemStateE.GsmModemStatus3GRegOk:
+                        _messagePrintApp(_window.TextBlockModemState, "Зарегистрирован в 3G");
+                        break;
+                    case ModemStateE.GsmModemStatusCallCtrl:
+                        _messagePrintApp(_window.TextBlockModemState, "Контроль вызовов");
+                        break;
+                    default:
+                        _messagePrintApp(_window.TextBlockModemState, "Не определено");
+                        break;
+                }
                 break;
 
             case IoNb.Sim1Registered2G:
