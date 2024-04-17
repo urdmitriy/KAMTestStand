@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Timers;
 using System.Windows;
 using System.Windows.Documents;
 
@@ -29,8 +30,6 @@ public class DataExchange
     private MainWindow _window;
     private List<String> _logIncomMessageList;
     private DataGridUpdateApp _dataGridUpdateApp;
-    private DateTime _timeRunDi1Count;
-    private DateTime _timeRunDi2Count;
 
     private void IncomDataHandler(int serialNum, int commandId, DataT data)
     {
@@ -39,100 +38,42 @@ public class DataExchange
         switch ((IoNb)commandId)
         {
             case IoNb.Sim1CountData2G:
-                if (data.Result == ResultE.StatusTesting)
-                {
-                    string ipaddr =
-                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
-                            .Sim1IpAddr2GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr2GRes = data.Result, Sim1IpAddr2GVal = data.Value});
-                }
-                else
-                {
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr2GRes = data.Result, Sim1IpAddr2GVal = data.Value});
-                }
+                _entityList.AddDataEntity(new Entity()
+                    { SerialNumberVal = serialNum, Sim1CountData2GRes = data.Result, Sim1CountData2GVal = data.Value });
                 break;
-            
-            case IoNb.Sim1CountData3G:
-                if (data.Result == ResultE.StatusTesting)
-                {
-                    string ipaddr =
-                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
-                            .Sim1IpAddr2GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp(_window.TextBlockMessage, $"Отправлены данные на {ipaddr}");
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr3GRes = data.Result, Sim1IpAddr3GVal = data.Value});
-                }
-                else
-                {
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1IpAddr3GRes = data.Result, Sim1IpAddr3GVal = data.Value});
-                }
-                break;
-            
-            case IoNb.Sim2CountData2G:
-                if (data.Result == ResultE.StatusTesting)
-                {
-                    string ipaddr =
-                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
-                            .Sim2IpAddr2GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp(_window.TextBlockMessage, $"Отправлены данные на {ipaddr}");
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr3GRes = data.Result, Sim2IpAddr3GVal = data.Value});
-                }
-                else
-                {
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr2GRes = data.Result, Sim2IpAddr2GVal = data.Value});
-                }
-                break;
-            
-            case IoNb.Sim2CountData3G:
-                if (data.Result == ResultE.StatusTesting)
-                {
-                    string ipaddr =
-                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
-                            .Sim2IpAddr2GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
-                    _messagePrintApp(_window.TextBlockMessage, $"Отправлены данные на {ipaddr}");
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr3GRes = data.Result, Sim2IpAddr3GVal = data.Value});
-                }
-                else
-                {
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2IpAddr3GRes = data.Result, Sim2IpAddr3GVal = data.Value});
-                }
-                break;
-            
-            case IoNb.DiCnt1:
-                if (data.Result == ResultE.StatusTesting)
-                {
-                    if ((DateTime.Now - _timeRunDi1Count) < TimeSpan.FromSeconds(2)) return;
-                    _messagePrintApp(_window.TextBlockMessage, "Данные отправлены на Discovery (cnt1)");
 
-                    byte[] dataByteArray = new byte[16];
-                    dataByteArray[0] = Convert.ToByte(commandId);
-                    dataByteArray[4] = Convert.ToByte(ResultE.StatusTesting);
-                    _comData.SendDataDiscovery(dataByteArray, 0, 16);
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, DiCnt1Res = data.Result, DiCnt1Val = data.Value});
-                    _timeRunDi1Count = DateTime.Now;
+            case IoNb.Sim1CountData3G:
+                _entityList.AddDataEntity(new Entity()
+                    { SerialNumberVal = serialNum, Sim1CountData3GRes = data.Result, Sim1CountData3GVal = data.Value });
+                break;
+
+            case IoNb.Sim2CountData2G:
+                _entityList.AddDataEntity(new Entity()
+                    { SerialNumberVal = serialNum, Sim2CountData2GRes = data.Result, Sim2CountData2GVal = data.Value });
+                break;
+
+            case IoNb.Sim2CountData3G:
+                _entityList.AddDataEntity(new Entity()
+                    { SerialNumberVal = serialNum, Sim2CountData3GRes = data.Result, Sim2CountData3GVal = data.Value });
+                break;
+
+            case IoNb.DiCnt1:
+                if (data.Result == ResultE.StatusRequestToMaster)
+                {
+                    SendDataDiCount(serialNum, 1);
                 }
                 else
                 {
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, DiCnt1Res = data.Result, DiCnt1Val = data.Value});
+                    _entityList.AddDataEntity(new Entity()
+                        { SerialNumberVal = serialNum, DiCnt1Res = data.Result, DiCnt1Val = data.Value });
                 }
+
                 break;
 
             case IoNb.DiCnt2:
-                if (data.Result == ResultE.StatusTesting)
+                if (data.Result == ResultE.StatusRequestToMaster)
                 {
-                    if ((DateTime.Now - _timeRunDi2Count) < TimeSpan.FromSeconds(2)) return;
-                    _messagePrintApp(_window.TextBlockMessage, "Данные отправлены на Discovery (cnt2)");
-
-                    byte[] dataByteArray = new byte[16];
-                    dataByteArray[0] = Convert.ToByte(commandId);
-                    dataByteArray[4] = Convert.ToByte(ResultE.StatusTesting);
-                    _comData.SendDataDiscovery(dataByteArray, 0, 16);
-                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, DiCnt2Res = data.Result, DiCnt2Val = data.Value});
-                    _timeRunDi2Count = DateTime.Now;
+                    SendDataDiCount(serialNum, 2);
                 }
                 else
                 {
@@ -144,7 +85,7 @@ public class DataExchange
                 break;
             
             case IoNb.CurrDevice:
-                _messagePrintApp(_window.TextBlockDeviceNum, data.Value.ToString());
+                _messagePrintApp(_window.TextBlockDeviceNum, (data.Value + 1).ToString());
                 break;
             
             case IoNb.DeviceId:
@@ -236,19 +177,67 @@ public class DataExchange
                 break;
 
             case IoNb.Sim1Registered2G:
-                _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1Registered2GRes = data.Result, Sim1Registered2GVal = data.Value});
+                if (data.Result == ResultE.StatusRequestToMaster)
+                {
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim1IpAddr2GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
+                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
+                }
+                else
+                {
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1Registered2GRes = data.Result, Sim1Registered2GVal = data.Value});
+                }
                 break;
 
             case IoNb.Sim1Registered3G:
-                _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1Registered3GRes = data.Result, Sim1Registered3GVal = data.Value});
+                if (data.Result == ResultE.StatusRequestToMaster)
+                {
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim1IpAddr3GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
+                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
+                }
+                else
+                {
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1Registered3GRes = data.Result, Sim1Registered3GVal = data.Value});
+                }
                 break;
 
             case IoNb.Sim2Registered2G:
-                _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2Registered2GRes = data.Result, Sim2Registered2GVal = data.Value});
+                if (data.Result == ResultE.StatusRequestToMaster)
+                {
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim2IpAddr2GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
+                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
+                }
+                else
+                {
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2Registered2GRes = data.Result, Sim2Registered2GVal = data.Value});
+                }
                 break;
 
             case IoNb.Sim2Registered3G:
-                _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2Registered3GRes = data.Result, Sim2Registered3GVal = data.Value});
+                if (data.Result == ResultE.StatusRequestToMaster)
+                {
+                    string ipaddr =
+                        ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
+                            .Sim2IpAddr3GVal);
+                    _tcpData.SendTestTcpData(ipaddr);
+                    _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
+                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
+                }
+                else
+                {
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2Registered3GRes = data.Result, Sim2Registered3GVal = data.Value});
+                }
                 break;
 
             case IoNb.Sim1IpAddr2G:
@@ -324,7 +313,14 @@ public class DataExchange
                 break;
 
             case IoNb.ReadyTime:
-                _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, ReadyTimeRes = data.Result, ReadyTimeVal = data.Value});
+            {
+                var res = _entityList.Data.Where((x)=>x.SerialNumberVal == serialNum).FirstOrDefault((x) => x.ReadyTimeRes == ResultE.StatusPass);
+                if (res is null)
+                {
+                    _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, ReadyTimeRes = data.Result, ReadyTimeVal = data.Value});    
+                } 
+            }
+               
                 break;
 
             case IoNb.SerialNumber:
@@ -378,8 +374,23 @@ public class DataExchange
         var commandId = int.Parse(data.Substring(positionIdBegin, positionIdEnd - positionIdBegin));
         var result = int.Parse(data.Substring(positionResultBegin, positionResultEnd - positionResultBegin));
         var value = int.Parse(data.Substring(positionValueBegin, positionValueEnd - positionValueBegin));
-
         var dataRcv = new DataT() { Result = (ResultE)result, Value = value };
+        
         IncomDataHandler(serialNum, commandId, dataRcv);
+    }
+
+    private void SendDataDiCount(int serialNum, int di)
+    {
+        _messagePrintApp(_window.TextBlockMessage, $"Данные отправлены на Discovery (cnt{di})");
+        _logIncomMessageList.Add("Данные отправлены на Discovery (cnt1)");
+        int commandId = 0;
+        byte[] dataByteArray = new byte[16];
+
+        if (di == 1) commandId = (int)IoNb.DiCnt1;
+        if (di == 2) commandId = (int)IoNb.DiCnt2;
+
+        dataByteArray[0] = Convert.ToByte(commandId);
+        dataByteArray[4] = Convert.ToByte(ResultE.StatusRequestToMaster);
+        _comData.SendDataDiscovery(dataByteArray, 0, 16);
     }
 }

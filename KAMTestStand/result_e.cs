@@ -6,6 +6,8 @@ public enum ResultE
     StatusTesting,
     StatusPass,
     StatusError,
-    StatusNoAccess,
+    StatusRequestToMaster,
     StatusWait,
+    StatusNotAllow,
+    StatusOwnerDecides,
 }

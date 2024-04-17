@@ -20,7 +20,7 @@ public class SetColorCell : IValueConverter
                 return new SolidColorBrush(Colors.BlueViolet);
             case ResultE.StatusPass:
                 return new SolidColorBrush(Colors.ForestGreen);
-            case ResultE.StatusNoAccess:
+            case ResultE.StatusNotAllow:
                 return new SolidColorBrush(Colors.Black);
             case ResultE.StatusWait:
                 return new SolidColorBrush(Colors.Gray);

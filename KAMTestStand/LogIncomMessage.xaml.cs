@@ -10,15 +10,15 @@ public partial class LogIncomMessage : Window
     public LogIncomMessage(List<String> logIncomMessageList)
     {
         InitializeComponent();
-        _logIncomMessageList = logIncomMessageList;
-        ListBoxData.ItemsSource = _logIncomMessageList;
+        LogIncomMessageList = logIncomMessageList;
+        ListBoxData.ItemsSource = LogIncomMessageList;
     }
 
-    private readonly List<String> _logIncomMessageList;
+    public readonly List<String> LogIncomMessageList;
     
     private void ButtonClear_OnClick(object sender, RoutedEventArgs e)
     {
-        _logIncomMessageList.Clear();
+        LogIncomMessageList.Clear();
         Dispatcher.Invoke(() => ListBoxData.Items.Refresh());
     }
 

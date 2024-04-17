@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 
 namespace KAMTestStand
 {
@@ -34,7 +35,7 @@ namespace KAMTestStand
             
             _comData = new ComData(settings);
             _comData.Init();
-            var tcpData = new TcpData(settings);
+            var tcpData = new TcpData(settings, logIncomingMessageList);
             var report = new Report(settings);
 
             var dataExchange = new DataExchange(_comData, tcpData, report, _entityList, logIncomingMessageList, 
@@ -94,12 +95,16 @@ namespace KAMTestStand
         private void ButtonClear_OnClick(object sender, RoutedEventArgs e)
         {
             _entityList.Data.Clear();
+            TextBlockMessage.Text = "";
+            _logIncomingMessageWindow.LogIncomMessageList.Clear();
             DataGridUpdate();
         }
 
         private void DataGridUpdate()
         {
-            Dispatcher.Invoke(()=>DataGrid.Items.Refresh()) ;
+            Dispatcher.Invoke(()=> DataGrid.Items.Refresh()) ;
+            if (DataGrid.Items.Count > 2)
+                DataGrid.ScrollIntoView(DataGrid.Items[DataGrid.Items.Count - 1]);
         }
         
         private void MessagePrint(TextBlock textBlock, string message)

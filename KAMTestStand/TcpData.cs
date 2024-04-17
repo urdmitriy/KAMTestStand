@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Text;
 
@@ -6,13 +7,15 @@ namespace KAMTestStand;
 
 public class TcpData
 {
-    public TcpData(SettingsData settingsData)
+    public TcpData(SettingsData settingsData, List<string> logList)
     {
         _settingsData = settingsData;
+        _logList = logList;
     }
 
     private readonly SettingsData _settingsData;
     private TcpClient _tcpClient = new();
+    private readonly List<string> _logList;
     public async void SendTestTcpData(string ipAddress)
     {
         if (string.IsNullOrEmpty(ipAddress) || ipAddress == "0.0.0.0") return;
@@ -30,7 +33,7 @@ public class TcpData
         }
         catch (Exception e)
         {
-            Console.WriteLine($"I couldn't connect to {ipAddress}");
+            _logList.Add($"I couldn't connect to {ipAddress} {e.Message}");
         }
 
     }
