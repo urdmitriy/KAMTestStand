@@ -158,11 +158,6 @@
             <Setter Property="Foreground" Value="{Binding Path=ButtonResetRes, Converter={StaticResource SetColorCell}}"></Setter>
             <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
         </Style>
-        <Style x:Key="StyleCellStatusLed" TargetType="{x:Type DataGridCell}">
-            <Setter Property="Background" Value="{Binding Path=LedLestRes, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="Foreground" Value="{Binding Path=LedLestRes, Converter={StaticResource SetColorCell}}"></Setter>
-            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-        </Style>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -206,6 +201,30 @@
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=ReadyTimeRes}" 
                                     CellStyle="{StaticResource StyleCellStatusReadyTime}" 
+                                    Width="0.7*">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Кнопка 1н" 
+                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
+                                    Binding="{Binding Path=ButtonShortRes}" 
+                                    CellStyle="{StaticResource StyleCellStatusButtonShort}"
+                                    Width="0.7*">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Кнопка 2н" 
+                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
+                                    Binding="{Binding Path=ButtonDoubleRes}" 
+                                    CellStyle="{StaticResource StyleCellStatusButtonDbl}"
+                                    Width="0.7*">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Кнопка длин." 
+                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
+                                    Binding="{Binding Path=ButtonLongRes}" 
+                                    CellStyle="{StaticResource StyleCellStatusButtonLong}"
+                                    Width="0.7*">
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Копка Reset" 
+                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
+                                    Binding="{Binding Path=ButtonResetRes}" 
+                                    CellStyle="{StaticResource StyleCellStatusButtonReset}"
                                     Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="RS-232 #1" 
@@ -309,36 +328,6 @@
                                     HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
                                     Binding="{Binding Path=TimeSyncRes}" 
                                     CellStyle="{StaticResource StyleCellStatusNtp}"
-                                    Width="0.7*">
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Кнопка 1н" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=ButtonShortRes}" 
-                                    CellStyle="{StaticResource StyleCellStatusButtonShort}"
-                                    Width="0.7*">
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Кнопка 2н" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=ButtonDoubleRes}" 
-                                    CellStyle="{StaticResource StyleCellStatusButtonDbl}"
-                                    Width="0.7*">
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Кнопка длин." 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=ButtonLongRes}" 
-                                    CellStyle="{StaticResource StyleCellStatusButtonLong}"
-                                    Width="0.7*">
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="Копка Reset" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=ButtonResetRes}" 
-                                    CellStyle="{StaticResource StyleCellStatusButtonReset}"
-                                    Width="0.7*">
-                </DataGridTextColumn>
-                <DataGridTextColumn Header="LED" 
-                                    HeaderStyle="{StaticResource ColumnHeaderRotateStyle}" 
-                                    Binding="{Binding Path=LedLestRes}" 
-                                    CellStyle="{StaticResource StyleCellStatusLed}"
                                     Width="0.7*">
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Iсон, мкА" 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
 using System.Windows;
@@ -10,7 +11,7 @@ namespace KAMTestStand;
 public class DataExchange
 {
     public DataExchange(ComData comData, TcpData tcpData, Report report, EntityList entityList, 
-        List<String> logIncomMessageList, MessagePrintApp messagePrintApp, DataGridUpdateApp dataGridUpdateApp, MainWindow windowData)
+        ObservableCollection<String> logIncomMessageList, MessagePrintApp messagePrintApp, MainWindow windowData)
     {
         _comData = comData;
         _tcpData = tcpData;
@@ -18,7 +19,6 @@ public class DataExchange
         _entityList = entityList;
         _messagePrintApp = messagePrintApp;
         _logIncomMessageList = logIncomMessageList;
-        _dataGridUpdateApp = dataGridUpdateApp;
         _window = windowData;
     }
     
@@ -28,8 +28,7 @@ public class DataExchange
     private readonly EntityList _entityList;
     private readonly MessagePrintApp _messagePrintApp;
     private MainWindow _window;
-    private List<String> _logIncomMessageList;
-    private DataGridUpdateApp _dataGridUpdateApp;
+    private ObservableCollection<String> _logIncomMessageList;
 
     private void IncomDataHandler(int serialNum, int commandId, DataT data)
     {
@@ -182,11 +181,10 @@ public class DataExchange
                     string ipaddr =
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim1IpAddr2GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
+                    _tcpData.SendTestTcpData(ipaddr, (IoNb)commandId, serialNum);
                     _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
-                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
                 }
-                else
+                else if (data.Result != ResultE.StatusPass)
                 {
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1Registered2GRes = data.Result, Sim1Registered2GVal = data.Value});
                 }
@@ -198,11 +196,10 @@ public class DataExchange
                     string ipaddr =
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim1IpAddr3GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
+                    _tcpData.SendTestTcpData(ipaddr, (IoNb)commandId, serialNum);
                     _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
-                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
                 }
-                else
+                else if (data.Result != ResultE.StatusPass)
                 {
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim1Registered3GRes = data.Result, Sim1Registered3GVal = data.Value});
                 }
@@ -214,11 +211,10 @@ public class DataExchange
                     string ipaddr =
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim2IpAddr2GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
+                    _tcpData.SendTestTcpData(ipaddr, (IoNb)commandId, serialNum);
                     _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
-                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
                 }
-                else
+                else if (data.Result != ResultE.StatusPass)
                 {
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2Registered2GRes = data.Result, Sim2Registered2GVal = data.Value});
                 }
@@ -230,11 +226,10 @@ public class DataExchange
                     string ipaddr =
                         ParseIpAddress(_entityList.Data.FirstOrDefault((x) => x.SerialNumberVal == serialNum)!
                             .Sim2IpAddr3GVal);
-                    _tcpData.SendTestTcpData(ipaddr);
+                    _tcpData.SendTestTcpData(ipaddr, (IoNb)commandId, serialNum);
                     _messagePrintApp(_window.TextBlockMessage,$"Отправлены данные на {ipaddr}");
-                    _logIncomMessageList.Add($"Отправлены данные на {ipaddr}");
                 }
-                else
+                else if (data.Result != ResultE.StatusPass)
                 {
                     _entityList.AddDataEntity(new Entity(){SerialNumberVal = serialNum, Sim2Registered3GRes = data.Result, Sim2Registered3GVal = data.Value});
                 }
@@ -359,8 +354,7 @@ public class DataExchange
     
     public void ParseData(string data)
     {
-        _logIncomMessageList.Add(data);
-        _dataGridUpdateApp();
+        
         var positionSerialBegin = data.IndexOf("<SerialNum>", StringComparison.Ordinal) + "<SerialNum>".Length;
         var positionSerialEnd = data.IndexOf("</SerialNum>", StringComparison.Ordinal);
         var positionIdBegin = data.IndexOf("<CommandId>", StringComparison.Ordinal) + "<CommandId>".Length;
@@ -375,7 +369,13 @@ public class DataExchange
         var result = int.Parse(data.Substring(positionResultBegin, positionResultEnd - positionResultBegin));
         var value = int.Parse(data.Substring(positionValueBegin, positionValueEnd - positionValueBegin));
         var dataRcv = new DataT() { Result = (ResultE)result, Value = value };
-        
+
+        if (commandId != (int)IoNb.CurrentGsmMa && commandId != (int)IoNb.CurrentGsmPeakMa)
+        {
+            string message = $"{DateTime.Now.ToString("G")} \t Сер.№ {serialNum} \t {(IoNb)commandId} \t {(ResultE)result} \t\t {value}";
+            _logIncomMessageList.Add(message);
+        }
+
         IncomDataHandler(serialNum, commandId, dataRcv);
     }
 

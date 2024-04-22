@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Documents;
 
 namespace KAMTestStand
@@ -25,8 +27,8 @@ namespace KAMTestStand
         public MainWindow()
         {
             _entityList = new EntityList(DataGridUpdate);
-            var logIncomingMessageList = new List<string>();
-            
+            var logIncomingMessageList = new ObservableCollection<string>();
+
             _logIncomingMessageWindow = new LogIncomMessage(logIncomingMessageList);
 
             var settings = new SettingsData();
@@ -35,17 +37,16 @@ namespace KAMTestStand
             
             _comData = new ComData(settings);
             _comData.Init();
-            var tcpData = new TcpData(settings, logIncomingMessageList);
+            var tcpData = new TcpData(settings, logIncomingMessageList, _entityList);
             var report = new Report(settings);
 
             var dataExchange = new DataExchange(_comData, tcpData, report, _entityList, logIncomingMessageList, 
-                MessagePrint, _logIncomingMessageWindow.UpdateData, this);
+                MessagePrint, this);
             _comData.ParseDataAppSet(dataExchange.ParseData);
             
             InitializeComponent();
             DataGrid.ItemsSource = _entityList.Data;
             
-            _entityList.AddDataEntity(new Entity(){SerialNumberVal = 123456789, Rs2321Res = ResultE.StatusPass, Rs2322Res = ResultE.StatusError});
             DataGridUpdate();
         }
 
